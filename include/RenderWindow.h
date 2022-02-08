@@ -9,8 +9,9 @@ class RenderWindow
 {
 private:
 	SDL_Window* window;
-	SDL_Renderer* renderer;
+
 public:
+	SDL_Renderer* renderer;
 	RenderWindow();
 	void CreateWindow(const char* title, int w, int h);
 	SDL_Texture* LoadTexture(const char* filePath);

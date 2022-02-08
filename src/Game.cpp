@@ -1,7 +1,7 @@
 #include"Game.h"
 
 Game::Game()
-	:gameRunning(true)
+	:gameRunning(true), background(Vector(0.f, 0.f))
 {
 	Init();
 	GameLoop();
@@ -16,6 +16,10 @@ void Game::Init()
 		std::cout << "Error: Failed to initialize SDL_image. " << IMG_GetError() << std::endl;
 
 	window.CreateWindow("Bezier Curves", 800, 600);
+	background.SetTexture(window.LoadTexture("res/gfx/Background.png"));
+
+	
+
 }
 
 void Game::GameLoop()
@@ -49,6 +53,10 @@ void Game::GameLoop()
 		alpha = accumulator / timeStep;
 
 		window.Clear();
+
+		window.Render(background);
+
+		bezierCurves.DrawQuadraticBezier(Vector(100.f, 450.f), Vector(400.f, 100.f), Vector(600.f, 450.f), window.renderer);
 
 		window.Display();
 

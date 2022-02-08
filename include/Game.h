@@ -6,11 +6,13 @@
 
 #include"RenderWindow.h"
 #include"Utils.h"
+#include"Curves.h"
 
 class Game
 {
 private:
 	RenderWindow window;
+
 
 	bool gameRunning;
 
@@ -24,6 +26,10 @@ private:
 	int frameTicks = 0;
 
 	SDL_Event event;
+
+	Entity background;
+
+	Curves bezierCurves;
 
 public:
 	Game();
