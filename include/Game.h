@@ -28,8 +28,11 @@ private:
 	SDL_Event event;
 
 	Entity background;
+	Entity handles[4];
 
 	Curves bezierCurves;
+	bool isDragging;
+	int draggingHandle;
 
 public:
 	Game();

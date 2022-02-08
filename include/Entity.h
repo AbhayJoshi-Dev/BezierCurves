@@ -11,6 +11,7 @@ private:
 	SDL_Texture* texture;
 	SDL_Rect currentFrame;
 public:
+	Entity() = default;
 	Entity(const Vector& pos);
 	Vector GetPosition();
 	void SetPosition(Vector pos);
