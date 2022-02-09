@@ -1,3 +1,7 @@
+This is a C++ SDL2 Demo, it demonstrate how...
+
+- to apply [De Casteljau's algorithm](https://en.wikipedia.org/wiki/De_Casteljau%27s_algorithm) on quadratic and Cubic [Bézier curves](https://en.wikipedia.org/wiki/B%C3%A9zier_curve).
+
 ## Screenshot
 ![](https://i.imgur.com/UJl4LUn.gif)
 
