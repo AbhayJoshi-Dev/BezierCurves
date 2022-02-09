@@ -1,3 +1,6 @@
+## Screenshot
+![](https://i.imgur.com/UJl4LUn.gif)
+
 ## Compiling
 
 Project depends on `SDL2` libs.
