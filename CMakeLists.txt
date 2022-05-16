@@ -2,32 +2,28 @@ cmake_minimum_required(VERSION 3.21.2)
 
 project(BezierCurves)
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake/")
+set( DEPS_DIR ${CMAKE_SOURCE_DIR}/build/external)
 
-set( DEPS_DIR ${CMAKE_SOURCE_DIR}/external)
+file(GLOB BezierCurves_SOURCE_FILES src/*.cpp)
+file(GLOB BezierCurves_HEADER_FILES include/*.h)
 
-list(APPEND SDL2_PATH "${DEPS_DIR}/SDL2/")
-list(APPEND SDL2_IMAGE_PATH "${DEPS_DIR}/SDL2_image/")
+add_subdirectory(external/SDL)
 
-find_package(SDL2 REQUIRED)
-find_package(SDL2_image REQUIRED)
+add_subdirectory(external/SDL_image)
 
-file(GLOB LL_SOURCE_FILES src/*.cpp)
-file(GLOB LL_HEADER_FILES include/*.h)
+add_executable(BezierCurves ${BezierCurves_SOURCE_FILES} ${BezierCurves_HEADER_FILES})
 
-add_executable(BezierCurves ${LL_SOURCE_FILES} ${LL_HEADER_FILES})
+target_include_directories(BezierCurves PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+                                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL/include/
+                                            ${CMAKE_CURRENT_SOURCE_DIR}/external/SDL_image/)
 
-set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT BezierCurves)
+target_link_libraries(BezierCurves PRIVATE SDL2 SDL2main SDL2_image)
 
-target_include_directories(BezierCurves PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include ${SDL2_INCLUDE_DIR} ${SDL2_IMAGE_INCLUDE_DIR})
-
-target_link_libraries(BezierCurves PRIVATE ${SDL2_LIBRARY} ${SDL2_IMAGE_LIBRARY})
-
-add_custom_command(TARGET BezierCurves POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
-                    "${DEPS_DIR}/SDL2/lib/x64/"
-                    "${DEPS_DIR}/SDL2_image/lib/x64/"
+add_custom_command(TARGET BezierCurves POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${DEPS_DIR}/SDL/Debug/SDL2d.dll"
+                    "${DEPS_DIR}/SDL_image/Debug/SDL2_imaged.dll"
                     $<TARGET_FILE_DIR:BezierCurves>)
 
 add_custom_command(TARGET BezierCurves POST_BUILD
-                   COMMAND ${CMAKE_COMMAND} -E copy_directory
-                       ${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:BezierCurves>/res)
+                    COMMAND ${CMAKE_COMMAND} -E copy_directory
+                    ${CMAKE_SOURCE_DIR}/res $<TARGET_FILE_DIR:BezierCurves>/res)
